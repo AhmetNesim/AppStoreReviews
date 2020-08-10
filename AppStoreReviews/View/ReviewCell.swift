@@ -25,11 +25,14 @@ class ReviewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(item: Review) {
-        ratingVersionLabel.text = item.ratingVersionText()
-        authorLabel.text = "from: \(item.author)"
-        titleLabel.text = "\(item.title)"
-        textPreviewLabel.text = "\(item.content)"
+    public var viewModel: ReviewCellViewModel? {
+        didSet {
+            guard let viewModel = viewModel else { return }
+            ratingVersionLabel.text = viewModel.ratingVersionText
+            authorLabel.text = "from: \(viewModel.author)"
+            titleLabel.text = "\(viewModel.title)"
+            textPreviewLabel.text = "\(viewModel.content)"
+        }
     }
     
     private func setupLabels() {

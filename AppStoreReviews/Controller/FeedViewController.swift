@@ -8,43 +8,85 @@
 
 import UIKit
 
-class FeedViewController: UITableViewController {
+class FeedViewController: UITableViewController, ViewControllerDelegate {
+    
+    private let viewModel = ReviewViewModel()
+    private var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ReviewCell.self, forCellReuseIdentifier: "cellId")
         tableView.rowHeight = 160
-    }
+        
+        viewModel.delegate = self
+        
+        showActivityIndicator()
+        
+        viewModel.getMostRecentReviews(language: .Dutch) { [weak self] in
+            DispatchQueue.main.async {
+                guard let self = self else {return}
+                self.hideActivityIndicator()
+            }
+        }
+        
+        let items = ["1⭐️", "2⭐️", "3⭐️", "4⭐️", "5⭐️", "ALL"]
 
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(reloadTableView))
+//        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+        
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 45))
+        let control = UISegmentedControl(items: items)
+        control.translatesAutoresizingMaskIntoConstraints = false
+        header.addSubview(control)
+        header.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[control]|", options: [], metrics: nil, views: ["control": control]))
+        header.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[control]|", options: [], metrics: nil, views: ["control": control]))
+        tableView.tableHeaderView = header
+    }
+    
+    @objc func reloadTableView() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return viewModel.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let c = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! ReviewCell
-        c.update(item: randomReview())
+        
+        let cellViewModel = viewModel.cellViewModel(index: indexPath.row)
+        c.viewModel = cellViewModel
+        
         return c
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = DetailsViewController(review: randomReview())
+        let cellViewModel = viewModel.cellViewModel(index: indexPath.row)
+        let vc = DetailsViewController(viewModel: cellViewModel)
         navigationController!.pushViewController(vc, animated: true)
     }
     
-    func randomReview() -> Review {
-        let author = ["Dan Auerbach", "Bo Diddley", "Otis Rush", "Jimi Hendrix", "Albert King", "Buddy Guy", "Muddy Waters", "Eric Clapton"].randomElement()!
-        let version = ["3.11", "3.12"].randomElement()!
-        let rating = Int.random(in: 1...5)
-        let title = ["Awesome app", "Could be better", "Gimme my money back!!", "Lemme tell you a story..."].randomElement()!
-        let id = UUID().uuidString
-        let content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        return Review(author: author,
-                      version: version,
-                      rating: rating,
-                      title: title,
-                      id: id,
-                      content: content)
-    }
 }
 
+extension UITableViewController {
+    func showActivityIndicator() {
+        DispatchQueue.main.async {
+            let activityView = UIActivityIndicatorView()
+            activityView.style = UIActivityIndicatorView.Style.large
+            activityView.center = self.view.center
+            activityView.hidesWhenStopped = true
+            self.tableView.backgroundView = activityView
+            
+            activityView.startAnimating()
+        }
+    }
+    
+    func hideActivityIndicator() {
+        DispatchQueue.main.async {
+            self.tableView.backgroundView = nil
+        }
+    }
+}
