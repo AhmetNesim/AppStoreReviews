@@ -58,16 +58,64 @@
 		345AD11A24C6EDD9004E2EE1 /* AppStoreReviews */ = {
 			isa = PBXGroup;
 			children = (
-				345AD13224C6EE64004E2EE1 /* DetailsViewController.swift */,
-				345AD12F24C6EE64004E2EE1 /* FeedViewController.swift */,
-				345AD13124C6EE64004E2EE1 /* Review.swift */,
-				345AD13024C6EE64004E2EE1 /* ReviewCell.swift */,
-				345AD11B24C6EDD9004E2EE1 /* AppDelegate.swift */,
-				345AD12424C6EDDC004E2EE1 /* Assets.xcassets */,
-				345AD12624C6EDDC004E2EE1 /* LaunchScreen.storyboard */,
-				345AD12924C6EDDC004E2EE1 /* Info.plist */,
+				D3D0793124E1C77D00F29802 /* Model */,
+				D3D0793024E1C77500F29802 /* View */,
+				D3D0792F24E1C76D00F29802 /* ViewModel */,
+				D3D0792E24E1C76500F29802 /* Controller */,
+				D3D0792D24E1C75600F29802 /* Network */,
+				D3D0792C24E1C74500F29802 /* SupportingFiles */,
 			);
 			path = AppStoreReviews;
+			sourceTree = "<group>";
+		};
+		D3D0792C24E1C74500F29802 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				345AD11B24C6EDD9004E2EE1 /* AppDelegate.swift */,
+				345AD12424C6EDDC004E2EE1 /* Assets.xcassets */,
+				345AD12924C6EDDC004E2EE1 /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		D3D0792D24E1C75600F29802 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		D3D0792E24E1C76500F29802 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				345AD13224C6EE64004E2EE1 /* DetailsViewController.swift */,
+				345AD12F24C6EE64004E2EE1 /* FeedViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D3D0792F24E1C76D00F29802 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D3D0793024E1C77500F29802 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				345AD13024C6EE64004E2EE1 /* ReviewCell.swift */,
+				345AD12624C6EDDC004E2EE1 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D3D0793124E1C77D00F29802 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				345AD13124C6EE64004E2EE1 /* Review.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,7 +329,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AppStoreReviews/Info.plist;
+				INFOPLIST_FILE = AppStoreReviews/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -298,7 +346,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AppStoreReviews/Info.plist;
+				INFOPLIST_FILE = AppStoreReviews/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
