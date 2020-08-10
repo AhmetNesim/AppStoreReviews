@@ -18,7 +18,12 @@ class ReviewViewModel {
     
     private let networking = Networking()
     
-    private var reviews: Reviews?
+    private var reviews: Reviews? {
+        didSet {
+            guard let items = reviews?.items else {return}
+            filteredReviews = items
+        }
+    }
     
     public func getMostRecentReviews(language: Language,
                                      completion: (() -> Void)?) {
@@ -28,8 +33,7 @@ class ReviewViewModel {
             switch response {
             case let .success(items):
                 self.reviews = items
-                guard let delegate = self.delegate else { return }
-                delegate.reloadTableView()
+                self.delegate?.reloadTableView()
             case let .failure(error):
                 print(error)
             }
@@ -38,12 +42,33 @@ class ReviewViewModel {
     }
     
     public func cellViewModel(index: Int) -> ReviewCellViewModel? {
-        guard let reviews = reviews else { return nil }
-        let reviewCellViewModel = ReviewCellViewModel(review: reviews.items[index])
+        let reviewCellViewModel = ReviewCellViewModel(review: filteredReviews[index])
         return reviewCellViewModel
     }
     
     public var count: Int {
-        return reviews?.items.count ?? 0
+        return filteredReviews.count
+    }
+    
+    private var filteredReviews = [Review] ()
+    
+    func applyFilter(rating: Int) {
+        if rating == 0 {
+            resetFilter()
+        }else {
+            filter(rating: rating)
+        }
+        delegate?.reloadTableView()
+
+    }
+    
+    private func filter(rating: Int) {
+        guard let items = reviews?.items else {return}
+        filteredReviews = items.filter{ $0.rating == rating }
+    }
+    
+    private func resetFilter() {
+        guard let items = reviews?.items else {return}
+        filteredReviews = items
     }
 }

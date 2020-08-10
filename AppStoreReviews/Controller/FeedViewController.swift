@@ -13,10 +13,13 @@ class FeedViewController: UITableViewController, ViewControllerDelegate {
     private let viewModel = ReviewViewModel()
     private var activityIndicator = UIActivityIndicatorView()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ReviewCell.self, forCellReuseIdentifier: "cellId")
         tableView.rowHeight = 160
+        
+        addSegmentControl()
         
         viewModel.delegate = self
         
@@ -28,27 +31,17 @@ class FeedViewController: UITableViewController, ViewControllerDelegate {
                 self.hideActivityIndicator()
             }
         }
-        
-        let items = ["1⭐️", "2⭐️", "3⭐️", "4⭐️", "5⭐️", "ALL"]
-
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(reloadTableView))
-//        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
-        
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 45))
-        let control = UISegmentedControl(items: items)
-        control.translatesAutoresizingMaskIntoConstraints = false
-        header.addSubview(control)
-        header.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[control]|", options: [], metrics: nil, views: ["control": control]))
-        header.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[control]|", options: [], metrics: nil, views: ["control": control]))
-        tableView.tableHeaderView = header
     }
-    
-    @objc func reloadTableView() {
+
+    func reloadTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
     
+}
+
+extension FeedViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.count
     }
@@ -68,25 +61,27 @@ class FeedViewController: UITableViewController, ViewControllerDelegate {
         let vc = DetailsViewController(viewModel: cellViewModel)
         navigationController!.pushViewController(vc, animated: true)
     }
-    
 }
 
-extension UITableViewController {
-    func showActivityIndicator() {
-        DispatchQueue.main.async {
-            let activityView = UIActivityIndicatorView()
-            activityView.style = UIActivityIndicatorView.Style.large
-            activityView.center = self.view.center
-            activityView.hidesWhenStopped = true
-            self.tableView.backgroundView = activityView
-            
-            activityView.startAnimating()
-        }
+extension FeedViewController {
+    
+    func addSegmentControl() {
+        let items = ["ALL", "1⭐️", "2⭐️", "3⭐️", "4⭐️", "5⭐️"]
+        
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 45))
+        let control = UISegmentedControl(items: items)
+        control.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.selectedSegmentIndex = 0
+        header.addSubview(control)
+        header.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[control]|", options: [], metrics: nil, views: ["control": control]))
+        header.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[control]|", options: [], metrics: nil, views: ["control": control]))
+
+        tableView.tableHeaderView = header
     }
     
-    func hideActivityIndicator() {
-        DispatchQueue.main.async {
-            self.tableView.backgroundView = nil
-        }
+    @objc func segmentChanged(_ sender: UISegmentedControl) {
+        viewModel.applyFilter(rating: sender.selectedSegmentIndex)
     }
+    
 }

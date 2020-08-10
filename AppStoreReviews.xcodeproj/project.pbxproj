@@ -20,6 +20,7 @@
 		D3D0793B24E1DEFC00F29802 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0793A24E1DEFC00F29802 /* ReviewViewModel.swift */; };
 		D3D0793D24E1DF3A00F29802 /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0793C24E1DF3A00F29802 /* Reviews.swift */; };
 		D3D0793F24E1E00E00F29802 /* ReviewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0793E24E1E00E00F29802 /* ReviewCellViewModel.swift */; };
+		D3D0794724E2108A00F29802 /* UITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0794624E2108A00F29802 /* UITableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		D3D0793A24E1DEFC00F29802 /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		D3D0793C24E1DF3A00F29802 /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
 		D3D0793E24E1E00E00F29802 /* ReviewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCellViewModel.swift; sourceTree = "<group>"; };
+		D3D0794624E2108A00F29802 /* UITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 		345AD11A24C6EDD9004E2EE1 /* AppStoreReviews */ = {
 			isa = PBXGroup;
 			children = (
+				D3D0794524E2107500F29802 /* Extension */,
 				D3D0793124E1C77D00F29802 /* Model */,
 				D3D0793024E1C77500F29802 /* View */,
 				D3D0792F24E1C76D00F29802 /* ViewModel */,
@@ -134,6 +137,14 @@
 				D3D0793C24E1DF3A00F29802 /* Reviews.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D3D0794524E2107500F29802 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D3D0794624E2108A00F29802 /* UITableViewController.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +220,7 @@
 				D3D0793524E1CA7A00F29802 /* EndpointType.swift in Sources */,
 				D3D0793D24E1DF3A00F29802 /* Reviews.swift in Sources */,
 				D3D0793B24E1DEFC00F29802 /* ReviewViewModel.swift in Sources */,
+				D3D0794724E2108A00F29802 /* UITableViewController.swift in Sources */,
 				345AD13524C6EE64004E2EE1 /* Review.swift in Sources */,
 				345AD13424C6EE64004E2EE1 /* ReviewCell.swift in Sources */,
 				345AD13324C6EE64004E2EE1 /* FeedViewController.swift in Sources */,
