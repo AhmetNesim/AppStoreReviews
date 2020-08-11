@@ -38,7 +38,7 @@ protocol FeedViewModelDelegate: class {
     func cellViewModel(index: Int) -> ReviewCellViewModel?
     func numberOfReviews() -> Int
     func getMostFrequentWords() -> [String]
-    func applyFilter(rating: Rating)
+    func filter(rating: Rating)
     func didSelect(index: Int)
 }
 
@@ -49,7 +49,7 @@ final class FeedViewModel:FeedViewModelDelegate {
     
     private let networkService = Service()
     
-    private var reviews: [Review]? {
+    var reviews: [Review]? {
         didSet {
             guard let reviews = reviews else {return}
             filteredReviews = reviews
@@ -82,22 +82,22 @@ final class FeedViewModel:FeedViewModelDelegate {
     
     private var mostFrequentWords: [String]?
     
-    private var filteredReviews = [Review] () {
+    public private(set) var filteredReviews = [Review] () {
         didSet {
             mostFrequentWords = findMostFrequentWords()
         }
     }
     
-    func applyFilter(rating: Rating) {
+    func filter(rating: Rating) {
         if rating == Rating.all {
             resetFilter()
         }else {
-            filter(rating: rating)
+            applyfilter(rating: rating)
         }
         delegate?.reloadTableView()
     }
     
-    private func filter(rating: Rating) {
+    private func applyfilter(rating: Rating) {
         guard let items = reviews else {return}
         filteredReviews = items.filter{ $0.rating == rating.rawValue }
     }
@@ -115,7 +115,7 @@ final class FeedViewModel:FeedViewModelDelegate {
         // Create dictionary to map value to count
         var counts =  [String: Int] ()
         //Flattens words array
-        let words = filteredReviews.flatMap({$0.content.components(separatedBy: " ").filter({$0.count > 4})})
+        let words = filteredReviews.flatMap({$0.content.components(separatedBy: " ").filter({$0.count > 3})})
         // Count the values with using forEach
         // Add one to its counts count if we have it, or set its count to 1 if we don't have it.
         words.forEach {counts[$0] = (counts[$0] ?? 0) + 1}

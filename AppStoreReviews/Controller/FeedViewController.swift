@@ -68,7 +68,7 @@ extension FeedViewController {
         let control = UISegmentedControl(items: items)
         control.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
         control.translatesAutoresizingMaskIntoConstraints = false
-        control.selectedSegmentIndex = 0
+        control.selectedSegmentIndex = 5
         header.addSubview(control)
         header.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[control]|", options: [], metrics: nil, views: ["control": control]))
         header.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[control]|", options: [], metrics: nil, views: ["control": control]))
@@ -83,7 +83,7 @@ extension FeedViewController {
     
     @objc func segmentChanged(_ sender: UISegmentedControl) {
         guard let selectedRating = Rating(rawValue: sender.selectedSegmentIndex + 1) else { return }
-        viewModel.applyFilter(rating: selectedRating)
+        viewModel.filter(rating: selectedRating)
     }
     
     @objc func showMostRecentWords () {
