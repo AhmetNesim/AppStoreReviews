@@ -1,5 +1,5 @@
 //
-//  ReviewViewModel.swift
+//  FeedViewModel.swift
 //  AppStoreReviews
 //
 //  Created by AHMET OMER NESIM on 10.08.2020.
@@ -27,14 +27,25 @@ public enum Rating: Int, CaseIterable {
         }
     }
 }
-protocol ViewControllerDelegate: class {
+
+protocol FeedViewControllerDelegate: class {
     func reloadTableView()
+    func routeToDetail(model: ReviewCellViewModel)
+}
+
+protocol FeedViewModelDelegate: class {
+    func getReviews(completion: (() -> Void)?)
+    func cellViewModel(index: Int) -> ReviewCellViewModel?
+    func numberOfReviews() -> Int
+    func getMostFrequentWords() -> [String]
+    func applyFilter(rating: Rating)
+    func didSelect(index: Int)
 }
 
 
-class ReviewViewModel {
+final class FeedViewModel:FeedViewModelDelegate {
     
-    weak var delegate: ViewControllerDelegate?
+    weak var delegate: FeedViewControllerDelegate?
     
     private let networkService = Service()
     
@@ -45,7 +56,7 @@ class ReviewViewModel {
         }
     }
     
-    public func getReviews(completion: (() -> Void)?) {
+    func getReviews(completion: (() -> Void)?) {
         
         networkService.getReviews { [weak self] reviews in
             guard let self = self else {return}
@@ -55,15 +66,19 @@ class ReviewViewModel {
         }
     }
     
-    public func cellViewModel(index: Int) -> ReviewCellViewModel? {
+    func cellViewModel(index: Int) -> ReviewCellViewModel? {
         let reviewCellViewModel = ReviewCellViewModel(review: filteredReviews[index])
         return reviewCellViewModel
     }
     
-    public var count: Int {
+    func numberOfReviews() -> Int {
         return filteredReviews.count
     }
     
+    func didSelect(index: Int) {
+        let model = ReviewCellViewModel(review: filteredReviews[index])
+        delegate?.routeToDetail(model: model)
+    }
     
     private var mostFrequentWords: [String]?
     
@@ -80,7 +95,6 @@ class ReviewViewModel {
             filter(rating: rating)
         }
         delegate?.reloadTableView()
-
     }
     
     private func filter(rating: Rating) {

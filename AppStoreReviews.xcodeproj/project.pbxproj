@@ -14,11 +14,11 @@
 		345AD13424C6EE64004E2EE1 /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345AD13024C6EE64004E2EE1 /* ReviewCell.swift */; };
 		345AD13524C6EE64004E2EE1 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345AD13124C6EE64004E2EE1 /* Review.swift */; };
 		345AD13624C6EE64004E2EE1 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345AD13224C6EE64004E2EE1 /* DetailsViewController.swift */; };
-		D337F1ED24E2A7E00054E042 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D337F1EC24E2A7E00054E042 /* Service.swift */; };
+		D337F1F124E2B7190054E042 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D337F1F024E2B7190054E042 /* Service.swift */; };
 		D3D0793324E1CA6000F29802 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0793224E1CA6000F29802 /* Networking.swift */; };
 		D3D0793524E1CA7A00F29802 /* EndpointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0793424E1CA7A00F29802 /* EndpointType.swift */; };
 		D3D0793724E1CA8E00F29802 /* AppStoreAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0793624E1CA8E00F29802 /* AppStoreAPI.swift */; };
-		D3D0793B24E1DEFC00F29802 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0793A24E1DEFC00F29802 /* ReviewViewModel.swift */; };
+		D3D0793B24E1DEFC00F29802 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0793A24E1DEFC00F29802 /* FeedViewModel.swift */; };
 		D3D0793D24E1DF3A00F29802 /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0793C24E1DF3A00F29802 /* Reviews.swift */; };
 		D3D0793F24E1E00E00F29802 /* ReviewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0793E24E1E00E00F29802 /* ReviewCellViewModel.swift */; };
 		D3D0794724E2108A00F29802 /* UITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0794624E2108A00F29802 /* UITableViewController.swift */; };
@@ -35,11 +35,11 @@
 		345AD13024C6EE64004E2EE1 /* ReviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
 		345AD13124C6EE64004E2EE1 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		345AD13224C6EE64004E2EE1 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
-		D337F1EC24E2A7E00054E042 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Service.swift; path = ../../../../Desktop/Service.swift; sourceTree = "<group>"; };
+		D337F1F024E2B7190054E042 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		D3D0793224E1CA6000F29802 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		D3D0793424E1CA7A00F29802 /* EndpointType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointType.swift; sourceTree = "<group>"; };
 		D3D0793624E1CA8E00F29802 /* AppStoreAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreAPI.swift; sourceTree = "<group>"; };
-		D3D0793A24E1DEFC00F29802 /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
+		D3D0793A24E1DEFC00F29802 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		D3D0793C24E1DF3A00F29802 /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
 		D3D0793E24E1E00E00F29802 /* ReviewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCellViewModel.swift; sourceTree = "<group>"; };
 		D3D0794624E2108A00F29802 /* UITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewController.swift; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 				D3D0793224E1CA6000F29802 /* Networking.swift */,
 				D3D0793424E1CA7A00F29802 /* EndpointType.swift */,
 				D3D0793624E1CA8E00F29802 /* AppStoreAPI.swift */,
-				D337F1EC24E2A7E00054E042 /* Service.swift */,
+				D337F1F024E2B7190054E042 /* Service.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -120,7 +120,7 @@
 		D3D0792F24E1C76D00F29802 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				D3D0793A24E1DEFC00F29802 /* ReviewViewModel.swift */,
+				D3D0793A24E1DEFC00F29802 /* FeedViewModel.swift */,
 				D3D0793E24E1E00E00F29802 /* ReviewCellViewModel.swift */,
 			);
 			path = ViewModel;
@@ -224,9 +224,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3D0793524E1CA7A00F29802 /* EndpointType.swift in Sources */,
-				D337F1ED24E2A7E00054E042 /* Service.swift in Sources */,
+				D337F1F124E2B7190054E042 /* Service.swift in Sources */,
 				D3D0793D24E1DF3A00F29802 /* Reviews.swift in Sources */,
-				D3D0793B24E1DEFC00F29802 /* ReviewViewModel.swift in Sources */,
+				D3D0793B24E1DEFC00F29802 /* FeedViewModel.swift in Sources */,
 				D3D0794724E2108A00F29802 /* UITableViewController.swift in Sources */,
 				345AD13524C6EE64004E2EE1 /* Review.swift in Sources */,
 				345AD13424C6EE64004E2EE1 /* ReviewCell.swift in Sources */,

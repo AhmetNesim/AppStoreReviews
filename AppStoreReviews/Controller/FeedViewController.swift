@@ -8,9 +8,9 @@
 
 import UIKit
 
-class FeedViewController: UITableViewController, ViewControllerDelegate {
+class FeedViewController: UITableViewController, FeedViewControllerDelegate {
     
-    private let viewModel = ReviewViewModel()
+    private let viewModel = FeedViewModel()
     private var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
@@ -32,11 +32,16 @@ class FeedViewController: UITableViewController, ViewControllerDelegate {
         }
     }
     
+    func routeToDetail(model: ReviewCellViewModel) {
+        let vc = DetailsViewController(viewModel: model)
+        navigationController!.pushViewController(vc, animated: true)
+    }
+    
 }
 
 extension FeedViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.count
+        return viewModel.numberOfReviews()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,9 +55,7 @@ extension FeedViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let cellViewModel = viewModel.cellViewModel(index: indexPath.row)
-        let vc = DetailsViewController(viewModel: cellViewModel)
-        navigationController!.pushViewController(vc, animated: true)
+        viewModel.didSelect(index: indexPath.row)
     }
 }
 
