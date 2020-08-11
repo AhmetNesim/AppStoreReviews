@@ -23,41 +23,15 @@ struct Review: Decodable {
         }
         return "\(stars) (ver: \(version))"
     }
-    
-    enum CodingKeys: String, CodingKey {
-        case rating = "im:rating"
-        case title
-        case version = "im:version"
-        case content
-        case id
-        case author
-        case name
-        case label
+}
+
+extension Review {
+    init(appStoreReview: AppStoreReview) {
+        self.author = appStoreReview.author
+        self.version = appStoreReview.version
+        self.rating = appStoreReview.rating
+        self.title = appStoreReview.title
+        self.id = appStoreReview.id
+        self.content = appStoreReview.content
     }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        let idDict = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .id)
-        id = try idDict.decode(String.self, forKey: .label)
-        
-        let titleDict = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .title)
-        title = try titleDict.decode(String.self, forKey: .label)
-
-        let ratingDict = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .rating)
-        let strRate = try ratingDict.decode(String.self, forKey: .label)
-        rating = Int(strRate) ?? 0
-
-        let versionDict = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .version)
-        version = try versionDict.decode(String.self, forKey: .label)
-
-        let contentDict = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .content)
-        content = try contentDict.decode(String.self, forKey: .label)
-
-        let authorDict = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .author)
-        let name = try authorDict.nestedContainer(keyedBy: CodingKeys.self, forKey: .name)
-        author = try name.decode(String.self, forKey: .label)
-    }
-    
-    
 }

@@ -13,26 +13,19 @@ class FeedViewController: UITableViewController, ViewControllerDelegate {
     private let viewModel = ReviewViewModel()
     private var activityIndicator = UIActivityIndicatorView()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ReviewCell.self, forCellReuseIdentifier: "cellId")
         tableView.rowHeight = 160
-        
         addSegmentControl()
-        
+        addNavigationItem()
         viewModel.delegate = self
-        
         showActivityIndicator()
-        
-        viewModel.getMostRecentReviews(language: .Dutch) { [weak self] in
-            DispatchQueue.main.async {
-                guard let self = self else {return}
-                self.hideActivityIndicator()
-            }
+        viewModel.getReviews {
+            self.hideActivityIndicator()
         }
     }
-
+    
     func reloadTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -66,7 +59,7 @@ extension FeedViewController {
 extension FeedViewController {
     
     func addSegmentControl() {
-        let items = ["ALL", "1⭐️", "2⭐️", "3⭐️", "4⭐️", "5⭐️"]
+        let items = Rating.allCases.compactMap { $0.title }
         
         let header = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 45))
         let control = UISegmentedControl(items: items)
@@ -76,12 +69,26 @@ extension FeedViewController {
         header.addSubview(control)
         header.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[control]|", options: [], metrics: nil, views: ["control": control]))
         header.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[control]|", options: [], metrics: nil, views: ["control": control]))
-
+        
         tableView.tableHeaderView = header
     }
     
-    @objc func segmentChanged(_ sender: UISegmentedControl) {
-        viewModel.applyFilter(rating: sender.selectedSegmentIndex)
+    func addNavigationItem() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Top Three Words", style: .plain, target: self, action: #selector(showMostRecentWords))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
     }
     
+    @objc func segmentChanged(_ sender: UISegmentedControl) {
+        guard let selectedRating = Rating(rawValue: sender.selectedSegmentIndex + 1) else { return }
+        viewModel.applyFilter(rating: selectedRating)
+    }
+    
+    @objc func showMostRecentWords () {
+        let alert = UIAlertController(title: "Top Three Occurring Words", message: nil , preferredStyle: UIAlertController.Style.alert)
+        for word in viewModel.getMostFrequentWords() {
+            alert.addAction(UIAlertAction(title: word, style: UIAlertAction.Style.default, handler: nil))
+        }
+        alert.addAction(UIAlertAction(title: "Done", style: UIAlertAction.Style.destructive, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
