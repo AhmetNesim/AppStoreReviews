@@ -47,9 +47,9 @@ final class FeedViewModel:FeedViewModelDelegate {
     
     weak var delegate: FeedViewControllerDelegate?
     
-    private let networkService = Service()
+    private lazy var networkService = Service()
     
-    var reviews: [Review]? {
+    private var reviews: [Review]? {
         didSet {
             guard let reviews = reviews else {return}
             filteredReviews = reviews
@@ -124,3 +124,10 @@ final class FeedViewModel:FeedViewModelDelegate {
     }
 }
 
+extension FeedViewModel {
+    static func stub(reviews: [Review]) -> FeedViewModel {
+        let viewModel = FeedViewModel()
+        viewModel.reviews = reviews
+        return viewModel
+    }
+}
